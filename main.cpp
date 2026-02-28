@@ -39,3 +39,41 @@ BiList<T> * insert (BiList<T> * node, const T& val)
   node->next = newNode;
   return newNode;
 }
+
+template< class T>
+BiList<T> * cut (BiList<T> * head) noexcept
+{
+  if (!head)
+  {
+    return nullptr;
+  }
+  if (head->next == head)
+  {
+    delete head;
+    return nullptr;
+  }
+  BiList<T> * newHead = head->next;
+  head->prev->next = newHead;
+  newHead->prev = head->prev;
+  delete head;
+  return newHead;
+}
+
+template< class T>
+BiList<T> * erase (BiList<T> * node) noexcept
+{
+  if (!node || node->next == node)
+  {
+    return nullptr;
+  }
+  if (head->next == head)
+  {
+    delete head;
+    return nullptr;
+  }
+  BiList<T> * after = node->next;
+  node->next = after->next;
+  after->next->prev = node;
+  delete after;
+  return node->next;
+}
