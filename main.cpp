@@ -100,3 +100,21 @@ BiList<T> * clear(BiList<T> * head) noexcept
   }
   return nullptr;
 }
+
+template< class T, class F >
+F traverse(F f, BiList<T> * begin, BiList<T> * end)
+{
+  if (!begin)
+  {
+    return f;
+  }
+  BiList<T> * current = begin;
+  f(current->val);
+  current = current->next;
+  while (current != end)
+  {
+    f(current->val);
+    current = current->next;
+  }
+  return f;
+}
