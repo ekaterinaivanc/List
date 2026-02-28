@@ -5,7 +5,7 @@ struct BiList {
   BiList<T> * prev;
 };
 
-template< class T>
+template< class T >
 BiList<T> * create(const T& val)
 {
   BiList<T> * node = new BiList<T>{val, nullptr, nullptr};
@@ -14,8 +14,8 @@ BiList<T> * create(const T& val)
   return node;
 }
 
-template< class T>
-BiList<T> * add (BiList<T> * node, const T& val)
+template< class T >
+BiList<T> * add(BiList<T> * node, const T& val)
 {
   if (!node)
   {
@@ -27,8 +27,8 @@ BiList<T> * add (BiList<T> * node, const T& val)
   return newNode;
 }
 
-template< class T>
-BiList<T> * insert (BiList<T> * node, const T& val)
+template< class T >
+BiList<T> * insert(BiList<T> * node, const T& val)
 {
   if (!node)
   {
@@ -40,8 +40,8 @@ BiList<T> * insert (BiList<T> * node, const T& val)
   return newNode;
 }
 
-template< class T>
-BiList<T> * cut (BiList<T> * head) noexcept
+template< class T >
+BiList<T> * cut(BiList<T> * head) noexcept
 {
   if (!head)
   {
@@ -59,8 +59,8 @@ BiList<T> * cut (BiList<T> * head) noexcept
   return newHead;
 }
 
-template< class T>
-BiList<T> * erase (BiList<T> * node) noexcept
+template< class T >
+BiList<T> * erase(BiList<T> * node) noexcept
 {
   if (!node || node->next == node)
   {
@@ -76,4 +76,27 @@ BiList<T> * erase (BiList<T> * node) noexcept
   after->next->prev = node;
   delete after;
   return node->next;
+}
+
+template< class T >
+BiList<T> * clear(BiList<T> * head) noexcept
+{
+  if (!head)
+  {
+    return nullptr;
+  }
+  if (head->next == head)
+  {
+    delete head;
+    return nullptr;
+  }
+  headf->prev->next = nullptr;
+  BiList<T> * current = head;
+  while (current)
+  {
+    BiList<T> * next = current->next;
+    delete current;
+    current = next;
+  }
+  return nullptr;
 }
