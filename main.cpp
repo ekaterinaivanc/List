@@ -1,3 +1,5 @@
+#include <cstddef>
+
 template< class T >
 struct BiList {
   T val;
@@ -117,4 +119,20 @@ F traverse(F f, BiList<T> * begin, BiList<T> * end)
     current = current->next;
   }
   return f;
+}
+
+template< class T >
+BiList<T> * convert(const T* arr, size_t size)
+{
+  if (size == 0)
+  {
+    return nullptr;
+  }
+  BiList<T> * head = create(arr[0]);
+  BiList<T> * current = head;
+  for (size_t i = 1; i < size; ++i)
+  {
+    current = insert(current, arr[i]);
+  }
+  return head;
 }
