@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <iostream>
 
 template< class T >
 struct BiList {
@@ -68,11 +69,6 @@ BiList<T> * erase(BiList<T> * node) noexcept
   {
     return nullptr;
   }
-  if (head->next == head)
-  {
-    delete head;
-    return nullptr;
-  }
   BiList<T> * after = node->next;
   node->next = after->next;
   after->next->prev = node;
@@ -135,4 +131,86 @@ BiList<T> * convert(const T* arr, size_t size)
     current = insert(current, arr[i]);
   }
   return head;
+}
+
+template< class T>
+BiList< T > * find(BiList<T> * head, const T& val)
+{
+  if (!head)
+  {
+    return nullptr;
+  }
+  BiList<T> * current = head;
+  if (current->val == val)
+  {
+    return current;
+  }
+  current = current->next;
+  while (true)
+  {
+    if (current->val == val)
+    {
+      return current;
+    }
+    current = current->next;
+    if (current == head)
+    {
+      break;
+    }
+  }
+  return nullptr;
+}
+
+template< class T >
+void printList(BiList<T> * head)
+{
+  if (!head)
+  {
+    return;
+  }
+  std::cout << head->val << " ";
+  BiList<T> * current = head->next;
+  while (current != head)
+  {
+    std::cout << current->val << " ";
+    current = current->next;
+  }
+  std::cout << "\n";
+}
+
+int main()
+{
+  int arr[] = {1, 20, 53, 47, 18};
+  size_t size = sizeof(arr) / sizeof(arr[0]);
+  for (size_t i = 0; i < size; ++i)
+  {
+    std::cout << arr[i] << " ";
+  }
+  std::cout << "\n";
+
+  BiList< int > * head = convert(arr, size);
+  printList(head);
+
+  head = add(head, 5);
+  printList(head);
+
+  BiList<int> * num = find(head, 53);
+  if (num)
+  {
+    insert(num, 10);
+    printList(head);
+  }
+
+  head = cut(head);
+  printList(head);
+
+  num = find(head, 47);
+  if (num)
+  {
+    erase(num);
+    printList(head);
+  }
+
+  head = clear(head);
+  return 0;
 }
